@@ -1,0 +1,8 @@
+# See https://docs.github.com/articles/about-code-owners
+# Every profile.json change gets reviewed by a maintainer before merge.
+# Expand this list as the maintainer team grows.
+
+*                     @AndySze
+/schema/              @AndySze
+/scripts/             @AndySze
+/.github/workflows/   @AndySze

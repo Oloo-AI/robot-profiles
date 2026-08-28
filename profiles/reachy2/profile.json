@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "id": "reachy2",
+  "name": "Reachy 2 人形上身",
+  "name_en": "Reachy 2 Humanoid",
+  "kind": "humanoid",
+  "dof": 24,
+  "bus": [
+    "sdk"
+  ],
+  "support_status": "planned",
+  "lerobot_type": "reachy2",
+  "vendor": {
+    "name": "Pollen Robotics",
+    "url": "https://github.com/pollen-robotics/reachy2_description"
+  }
+}

@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "id": "omx_follower",
+  "name": "OpenMANIPULATOR-X 从臂",
+  "name_en": "OpenMANIPULATOR-X Follower",
+  "kind": "arm",
+  "dof": 6,
+  "bus": [
+    "dynamixel"
+  ],
+  "support_status": "planned",
+  "lerobot_type": "omx_follower",
+  "vendor": {
+    "name": "ROBOTIS",
+    "url": "https://github.com/ROBOTIS-GIT/open_manipulator"
+  }
+}

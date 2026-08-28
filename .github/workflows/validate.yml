@@ -1,0 +1,61 @@
+name: validate
+
+on:
+  push:
+    branches: [main]
+  pull_request:
+    branches: [main]
+
+jobs:
+  validate:
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+
+      - uses: actions/setup-python@v5
+        with:
+          python-version: "3.12"
+
+      - name: Install dependencies
+        run: pip install -r scripts/requirements.txt
+
+      - name: Validate profiles (schema + semantic + file allowlist)
+        run: python scripts/validate.py
+
+      - name: Verify index.json matches `python scripts/build_index.py` output
+        # index.json's `generated_at` timestamp legitimately differs between a
+        # contributor's local build and this CI run, so we can't use a plain
+        # `git diff`. validate.py --check-index regenerates the index in memory
+        # and compares everything *except* generated_at against the committed file.
+        run: python scripts/validate.py --check-index
+
+      - name: Show content diff against committed index.json (informational)
+        if: always()
+        run: |
+          python - <<'EOF'
+          import json
+          with open("index.json") as f:
+              committed = json.load(f)
+          committed["generated_at"] = 0
+          with open("/tmp/index.committed.normalized.json", "w") as f:
+              json.dump(committed, f, indent=2, ensure_ascii=False)
+              f.write("\n")
+          EOF
+          python scripts/build_index.py --frozen-time 0 > /tmp/index.rebuilt.normalized.json
+          diff -u /tmp/index.committed.normalized.json /tmp/index.rebuilt.normalized.json || true
+
+      - name: Summarize changed/added profiles in this PR
+        if: github.event_name == 'pull_request'
+        run: |
+          echo "## Changed profiles" >> "$GITHUB_STEP_SUMMARY"
+          git fetch origin "${{ github.base_ref }}" --depth=1
+          CHANGED=$(git diff --name-only "origin/${{ github.base_ref }}"...HEAD -- profiles/ | grep -E '^profiles/[^/]+/profile\.json$' || true)
+          if [ -z "$CHANGED" ]; then
+            echo "_No profile.json changes in this PR._" >> "$GITHUB_STEP_SUMMARY"
+          else
+            for f in $CHANGED; do
+              id=$(python -c "import json,sys; print(json.load(open(sys.argv[1]))['id'])" "$f")
+              status=$(python -c "import json,sys; print(json.load(open(sys.argv[1]))['support_status'])" "$f")
+              echo "- \`$id\` (support_status: \`$status\`) — $f" >> "$GITHUB_STEP_SUMMARY"
+            done
+          fi

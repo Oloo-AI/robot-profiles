@@ -1,0 +1,66 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/schema/index.schema.json",
+  "title": "Oloo Robot Profile Registry Index",
+  "description": "CI-generated (scripts/build_index.py). Never hand-edit. See docs/design/robot-abstraction.md §5.1 in Oloo-AI/oloo-studio.",
+  "type": "object",
+  "additionalProperties": false,
+  "required": ["generated_at", "registry_version", "profiles"],
+  "properties": {
+    "generated_at": { "type": "integer", "minimum": 0, "description": "Unix epoch seconds." },
+    "registry_version": { "const": 1 },
+    "profiles": {
+      "type": "array",
+      "items": {
+        "type": "object",
+        "additionalProperties": false,
+        "required": [
+          "id", "name_zh", "name_en", "kind", "vendor", "dof", "bus",
+          "support_status", "schema_version", "min_app_version", "sha256",
+          "profile_url"
+        ],
+        "properties": {
+          "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+          "name_zh": { "type": "string", "minLength": 1 },
+          "name_en": { "type": "string", "minLength": 1 },
+          "kind": { "type": "string", "enum": ["arm", "bimanual", "hand", "mobile", "mobile_arm", "humanoid", "glove"] },
+          "vendor": { "type": "string" },
+          "dof": { "type": "integer", "minimum": 0 },
+          "bus": {
+            "type": "array",
+            "items": { "type": "string" }
+          },
+          "support_status": { "type": "string", "enum": ["verified_hw", "verified_mock", "planned"] },
+          "schema_version": { "const": 2 },
+          "min_app_version": { "type": "string", "pattern": "^\\d+\\.\\d+\\.\\d+$" },
+          "sha256": { "type": "string", "pattern": "^[a-f0-9]{64}$" },
+          "thumbnail_url": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "raw": { "type": "string", "format": "uri" },
+              "jsdelivr": { "type": "string", "format": "uri" }
+            }
+          },
+          "profile_url": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["raw", "jsdelivr"],
+            "properties": {
+              "raw": { "type": "string", "format": "uri" },
+              "jsdelivr": { "type": "string", "format": "uri" }
+            }
+          },
+          "urdf_url": {
+            "type": "object",
+            "additionalProperties": false,
+            "properties": {
+              "raw": { "type": "string", "format": "uri" },
+              "jsdelivr": { "type": "string", "format": "uri" }
+            }
+          }
+        }
+      }
+    }
+  }
+}

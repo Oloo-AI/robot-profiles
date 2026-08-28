@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "id": "hope_jr_hand",
+  "name": "HopeJR 灵巧手",
+  "name_en": "HopeJR Dexterous Hand",
+  "kind": "hand",
+  "dof": 16,
+  "bus": [
+    "feetech"
+  ],
+  "support_status": "planned",
+  "lerobot_type": "hope_jr_hand",
+  "vendor": {
+    "name": "TheRobotStudio",
+    "url": "https://github.com/TheRobotStudio/HopeJR"
+  }
+}

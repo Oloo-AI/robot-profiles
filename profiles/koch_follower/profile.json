@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "id": "koch_follower",
+  "name": "Koch 从臂（Follower）",
+  "name_en": "Koch Follower",
+  "kind": "arm",
+  "dof": 6,
+  "bus": [
+    "dynamixel"
+  ],
+  "support_status": "planned",
+  "lerobot_type": "koch_follower",
+  "vendor": {
+    "name": "Alexander Koch / community",
+    "url": "https://github.com/AlexanderKoch-Koch/low_cost_robot"
+  }
+}

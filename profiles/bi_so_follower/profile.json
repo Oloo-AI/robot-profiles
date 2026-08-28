@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "id": "bi_so_follower",
+  "name": "双臂 SO-101 从臂（Bimanual）",
+  "name_en": "Bimanual SO-101 Follower",
+  "kind": "bimanual",
+  "dof": 12,
+  "bus": [
+    "feetech"
+  ],
+  "support_status": "planned",
+  "lerobot_type": "bi_so_follower",
+  "vendor": {
+    "name": "TheRobotStudio",
+    "url": "https://github.com/TheRobotStudio/SO-ARM100"
+  }
+}

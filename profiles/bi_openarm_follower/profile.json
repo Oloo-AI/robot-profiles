@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "id": "bi_openarm_follower",
+  "name": "双臂 OpenArm（Bimanual）",
+  "name_en": "Bimanual OpenArm Follower",
+  "kind": "bimanual",
+  "dof": 16,
+  "bus": [
+    "damiao"
+  ],
+  "support_status": "planned",
+  "lerobot_type": "bi_openarm_follower",
+  "vendor": {
+    "name": "Enactic",
+    "url": "https://github.com/enactic/openarm"
+  }
+}

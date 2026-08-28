@@ -1,0 +1,287 @@
+{
+  "$schema": "https://json-schema.org/draft/2020-12/schema",
+  "$id": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/schema/robot-profile-v2.schema.json",
+  "title": "Oloo Robot Profile v2",
+  "description": "Data-only robot profile consumed by Oloo Studio. See docs/design/robot-abstraction.md §2.2 in Oloo-AI/oloo-studio for the canonical field-by-field rationale. This registry additionally allows `support_status: planned` minimal stubs (id/name/kind/dof/bus/support_status/lerobot_type only) for robots not yet fully profiled.",
+  "type": "object",
+  "required": ["schema_version", "id", "name", "kind", "support_status"],
+  "additionalProperties": false,
+  "$defs": {
+    "actuatorProtocol": {
+      "type": "string",
+      "enum": ["feetech", "dynamixel", "damiao", "robstride", "can_raw", "sdk", "zmq", "other"]
+    },
+    "busObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["id", "protocol", "transport"],
+      "properties": {
+        "id": { "type": "string", "minLength": 1, "description": "Unique within the profile; referenced by actuators[].bus" },
+        "protocol": { "$ref": "#/$defs/actuatorProtocol" },
+        "transport": { "type": "string", "enum": ["serial", "can", "ethernet", "sdk", "zmq"] },
+        "port_role": { "type": "string", "description": "Label shown to the user when picking a port, e.g. 'follower_arm', 'left_arm'" },
+        "params": {
+          "type": "object",
+          "description": "Transport-specific parameters (baudrate/protocol_version for serial; interface/channel/bitrate for can; package/host for sdk)."
+        },
+        "resolution": { "type": "integer", "minimum": 1, "description": "Default encoder resolution for actuators on this bus; may be overridden per-actuator." }
+      }
+    },
+    "actuatorObject": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name", "id", "bus", "model", "norm_mode"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "id": { "type": "integer", "minimum": 0 },
+        "bus": { "type": "string", "minLength": 1, "description": "Must match a buses[].id" },
+        "model": { "type": "string", "minLength": 1 },
+        "norm_mode": { "type": "string", "enum": ["degrees", "range_0_100", "range_m100_100"] },
+        "resolution": { "type": "integer", "minimum": 1 },
+        "expected_span_ticks": { "type": "integer", "minimum": 1 },
+        "full_turn": { "type": "boolean", "default": false },
+        "limits": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "range_deg": {
+              "type": ["array", "null"],
+              "items": { "type": "number" },
+              "minItems": 2,
+              "maxItems": 2
+            },
+            "max_step_deg": { "type": ["number", "null"] },
+            "max_torque": { "type": ["number", "null"] }
+          }
+        }
+      }
+    },
+    "featureRef": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["key", "actuator"],
+      "properties": {
+        "key": { "type": "string", "minLength": 1 },
+        "actuator": { "type": "string", "minLength": 1, "description": "Must match an actuators[].name" },
+        "unit": { "type": "string" }
+      }
+    }
+  },
+  "properties": {
+    "schema_version": { "const": 2 },
+
+    "id": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+    "name": { "type": "string", "minLength": 1, "description": "Primary display name (Chinese, per Oloo Studio UI convention)." },
+    "name_en": { "type": "string", "minLength": 1, "description": "English display name, used for index.json name_en." },
+
+    "robot_type": { "type": "string", "description": "lerobot-side family name; used for URDF routing / dataset robot_type prefix." },
+    "lerobot_type": { "type": ["string", "null"], "description": "lerobot RobotConfig/TeleoperatorConfig registered type name, or null for a non-lerobot / Oloo-only robot." },
+
+    "kind": { "type": "string", "enum": ["arm", "bimanual", "hand", "mobile", "mobile_arm", "humanoid", "glove"] },
+    "role": { "type": "string", "enum": ["follower", "leader", "standalone"] },
+    "dof": { "type": "integer", "minimum": 0, "description": "Total controllable degrees of freedom, for gallery display / filtering." },
+
+    "support_status": {
+      "type": "string",
+      "enum": ["verified_hw", "verified_mock", "planned"],
+      "description": "verified_hw = tested on real hardware; verified_mock = validated only against the mock bus, no real-hardware confirmation yet; planned = not yet profiled, stub entry only."
+    },
+
+    "vendor": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["name"],
+      "properties": {
+        "name": { "type": "string", "minLength": 1 },
+        "url": { "type": "string", "format": "uri" }
+      }
+    },
+
+    "aliases": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+      "description": "Other ids that resolve to this profile (e.g. so100_follower -> so101_follower)."
+    },
+
+    "bus": {
+      "type": "array",
+      "items": { "$ref": "#/$defs/actuatorProtocol" },
+      "minItems": 1,
+      "description": "Simplified protocol list. Required for planned stubs; for full profiles this is derivable from buses[].protocol and, if present, must be consistent with it."
+    },
+
+    "buses": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/busObject" }
+    },
+
+    "actuators": {
+      "type": "array",
+      "minItems": 1,
+      "items": { "$ref": "#/$defs/actuatorObject" }
+    },
+
+    "sensors": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "cameras": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "additionalProperties": false,
+            "required": ["role", "required"],
+            "properties": {
+              "role": { "type": "string", "minLength": 1 },
+              "required": { "type": "boolean" }
+            }
+          }
+        },
+        "imu": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "frame": { "type": "string" },
+            "features": { "type": "array", "items": { "type": "string" } }
+          }
+        },
+        "force_torque": { "type": ["object", "null"] }
+      }
+    },
+
+    "calibration": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["mode"],
+      "properties": {
+        "mode": { "type": "string", "enum": ["homing_range", "manual", "none", "vendor"] },
+        "steps": { "type": "array", "items": { "type": "string" } },
+        "full_turn_actuators": { "type": "array", "items": { "type": "string" } },
+        "lerobot_bucket": {
+          "type": "object",
+          "additionalProperties": false,
+          "properties": {
+            "robots": { "type": "string" },
+            "teleoperators": { "type": "string" }
+          }
+        },
+        "notes_zh": { "type": "string" }
+      }
+    },
+
+    "features": {
+      "type": "object",
+      "additionalProperties": false,
+      "required": ["observation.state", "action"],
+      "properties": {
+        "observation.state": { "type": "array", "items": { "$ref": "#/$defs/featureRef" } },
+        "action": { "type": "array", "items": { "$ref": "#/$defs/featureRef" } },
+        "images": { "type": "array", "items": { "type": "string" } }
+      }
+    },
+
+    "kinematics": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "urdf": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["source"],
+          "properties": {
+            "source": { "type": "string", "enum": ["builtin", "user_upload", "url", "none"] },
+            "path": { "type": "string" },
+            "url": { "type": "string", "format": "uri" },
+            "license": { "type": "string" },
+            "attribution": { "type": "string" },
+            "mesh_archive_url": { "type": "string", "format": "uri" },
+            "joint_map": {
+              "type": "object",
+              "additionalProperties": { "type": "array", "items": { "type": "string" } }
+            },
+            "joint_kind": {
+              "type": "object",
+              "additionalProperties": { "type": "string", "enum": ["revolute", "prismatic", "continuous", "fixed"] }
+            }
+          }
+        }
+      }
+    },
+
+    "teleop": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "compatible": { "type": "array", "items": { "type": "string" } },
+        "keyboard": {
+          "type": ["object", "null"],
+          "additionalProperties": false,
+          "properties": {
+            "auto": { "type": "boolean" },
+            "extra": { "type": "object" }
+          }
+        }
+      }
+    },
+
+    "safety": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "voltage_v": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["min", "max"],
+          "properties": {
+            "min": { "type": "number", "exclusiveMinimum": 0 },
+            "max": { "type": "number", "exclusiveMinimum": 0 }
+          }
+        },
+        "temperature_c": {
+          "type": "object",
+          "additionalProperties": false,
+          "required": ["max"],
+          "properties": {
+            "max": { "type": "number", "exclusiveMinimum": 0 }
+          }
+        },
+        "max_step_deg": { "type": ["number", "null"] },
+        "max_relative_target": { "type": ["number", "null"] },
+        "torque_on_connect": { "type": "boolean" }
+      }
+    },
+
+    "capabilities": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "read_temperature": { "type": "boolean" },
+        "read_voltage": { "type": "boolean" },
+        "read_load": { "type": "boolean" },
+        "torque_toggle": { "type": "boolean" },
+        "factory_reset": { "type": "boolean" },
+        "clear_errors": { "type": "boolean" },
+        "scan": { "type": "boolean" }
+      }
+    }
+  },
+  "allOf": [
+    {
+      "if": {
+        "properties": { "support_status": { "const": "planned" } },
+        "required": ["support_status"]
+      },
+      "then": {
+        "required": ["dof", "bus"]
+      },
+      "else": {
+        "required": [
+          "robot_type", "dof", "vendor", "buses", "actuators",
+          "sensors", "calibration", "features", "kinematics",
+          "teleop", "safety", "capabilities"
+        ]
+      }
+    }
+  ]
+}

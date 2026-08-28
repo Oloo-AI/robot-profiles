@@ -1,0 +1,303 @@
+{
+  "generated_at": 1787927115,
+  "registry_version": 1,
+  "profiles": [
+    {
+      "id": "bi_openarm_follower",
+      "name_zh": "双臂 OpenArm（Bimanual）",
+      "name_en": "Bimanual OpenArm Follower",
+      "kind": "bimanual",
+      "vendor": "Enactic",
+      "dof": 16,
+      "bus": [
+        "damiao"
+      ],
+      "support_status": "planned",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "d673723061b92a43493ba535ba65d9b6d33d8eeff4d6cda7d8d8f69bacad6055",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/bi_openarm_follower/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/bi_openarm_follower/profile.json"
+      }
+    },
+    {
+      "id": "bi_rebot_b601_follower",
+      "name_zh": "双臂 reBot B601（Bimanual）",
+      "name_en": "Bimanual reBot B601 Follower",
+      "kind": "bimanual",
+      "vendor": "Seeed Studio",
+      "dof": 14,
+      "bus": [
+        "other"
+      ],
+      "support_status": "planned",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "7b810b0ab67a9d74d2fe1489afc925f7359cb2f3ce449dd64c1749334198f677",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/bi_rebot_b601_follower/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/bi_rebot_b601_follower/profile.json"
+      }
+    },
+    {
+      "id": "bi_so_follower",
+      "name_zh": "双臂 SO-101 从臂（Bimanual）",
+      "name_en": "Bimanual SO-101 Follower",
+      "kind": "bimanual",
+      "vendor": "TheRobotStudio",
+      "dof": 12,
+      "bus": [
+        "feetech"
+      ],
+      "support_status": "planned",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "df0b42ead1646302d586225fc898e2d3286b346e0cdc8867ddebd65cb7d85aa8",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/bi_so_follower/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/bi_so_follower/profile.json"
+      }
+    },
+    {
+      "id": "earthrover_mini_plus",
+      "name_zh": "EarthRover Mini+ 移动车",
+      "name_en": "EarthRover Mini+ Rover",
+      "kind": "mobile",
+      "vendor": "Frodobots",
+      "dof": 0,
+      "bus": [
+        "other"
+      ],
+      "support_status": "planned",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "a15735bf55e686af11da16a229b71b37dff903ca3f4d9d7f69e5d0d940b416e1",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/earthrover_mini_plus/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/earthrover_mini_plus/profile.json"
+      }
+    },
+    {
+      "id": "hope_jr_arm",
+      "name_zh": "HopeJR 拟人臂",
+      "name_en": "HopeJR Humanoid Arm",
+      "kind": "arm",
+      "vendor": "TheRobotStudio",
+      "dof": 7,
+      "bus": [
+        "feetech"
+      ],
+      "support_status": "planned",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "beeb063585b79f7138ee69b74726e21f99e8109f77dd66e872d978985ceb0ea9",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/hope_jr_arm/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/hope_jr_arm/profile.json"
+      }
+    },
+    {
+      "id": "hope_jr_hand",
+      "name_zh": "HopeJR 灵巧手",
+      "name_en": "HopeJR Dexterous Hand",
+      "kind": "hand",
+      "vendor": "TheRobotStudio",
+      "dof": 16,
+      "bus": [
+        "feetech"
+      ],
+      "support_status": "planned",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "1656271144cbe0ae805739602bdf395a772fdab34ab8e044d4ec5a83294cb26e",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/hope_jr_hand/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/hope_jr_hand/profile.json"
+      }
+    },
+    {
+      "id": "koch_follower",
+      "name_zh": "Koch 从臂（Follower）",
+      "name_en": "Koch Follower",
+      "kind": "arm",
+      "vendor": "Alexander Koch / community",
+      "dof": 6,
+      "bus": [
+        "dynamixel"
+      ],
+      "support_status": "planned",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "7b26567d4336a93deece5581ac226ba4d57039eb596ba1db3488d21a6668812c",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/koch_follower/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/koch_follower/profile.json"
+      }
+    },
+    {
+      "id": "lekiwi",
+      "name_zh": "LeKiwi 移动底盘 + 臂",
+      "name_en": "LeKiwi Mobile Base + Arm",
+      "kind": "mobile_arm",
+      "vendor": "SIGRobotics-UIUC",
+      "dof": 9,
+      "bus": [
+        "feetech"
+      ],
+      "support_status": "planned",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "e7be1ce2047298ae7faf24fd3859b58a527ca6b4bcb4b7c6420481eb394b04fa",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/lekiwi/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/lekiwi/profile.json"
+      }
+    },
+    {
+      "id": "omx_follower",
+      "name_zh": "OpenMANIPULATOR-X 从臂",
+      "name_en": "OpenMANIPULATOR-X Follower",
+      "kind": "arm",
+      "vendor": "ROBOTIS",
+      "dof": 6,
+      "bus": [
+        "dynamixel"
+      ],
+      "support_status": "planned",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "1abe53288116fcfdaafeafd54133e78704853658ada7ce0d1ff8ef4c0539c65d",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/omx_follower/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/omx_follower/profile.json"
+      }
+    },
+    {
+      "id": "openarm_follower",
+      "name_zh": "OpenArm 从臂",
+      "name_en": "OpenArm Follower",
+      "kind": "arm",
+      "vendor": "Enactic",
+      "dof": 8,
+      "bus": [
+        "damiao"
+      ],
+      "support_status": "planned",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "41112aa6535b3424384dea0bd04e56762c52c4ffb62149a38f92a11615de9cd0",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/openarm_follower/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/openarm_follower/profile.json"
+      }
+    },
+    {
+      "id": "reachy2",
+      "name_zh": "Reachy 2 人形上身",
+      "name_en": "Reachy 2 Humanoid",
+      "kind": "humanoid",
+      "vendor": "Pollen Robotics",
+      "dof": 24,
+      "bus": [
+        "sdk"
+      ],
+      "support_status": "planned",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "96740d28c8bb71acc8db9d164f6ed3f7ffcbc88a0ad8c978b52d06e0b68ac614",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/reachy2/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/reachy2/profile.json"
+      }
+    },
+    {
+      "id": "rebot_b601_follower",
+      "name_zh": "reBot B601 从臂",
+      "name_en": "reBot B601 Follower",
+      "kind": "arm",
+      "vendor": "Seeed Studio",
+      "dof": 7,
+      "bus": [
+        "other"
+      ],
+      "support_status": "planned",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "9b1d147392100fd82bbc678f8d3f2d2ad6ec815e798c297e8f526cf6a4d0a50c",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/rebot_b601_follower/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/rebot_b601_follower/profile.json"
+      }
+    },
+    {
+      "id": "so101_follower",
+      "name_zh": "SO-101 从臂（Follower）",
+      "name_en": "SO-101 Follower",
+      "kind": "arm",
+      "vendor": "TheRobotStudio",
+      "dof": 6,
+      "bus": [
+        "feetech"
+      ],
+      "support_status": "verified_mock",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "b7a986778be93cadce5b8cce0ad116a51be77be33f983eced7272411bf4994e6",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/so101_follower/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/so101_follower/profile.json"
+      },
+      "thumbnail_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/so101_follower/thumbnail.webp",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/so101_follower/thumbnail.webp"
+      },
+      "urdf_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/so101_follower/urdf/robot.urdf",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/so101_follower/urdf/robot.urdf"
+      }
+    },
+    {
+      "id": "so101_leader",
+      "name_zh": "SO-101 主臂（Leader）",
+      "name_en": "SO-101 Leader",
+      "kind": "arm",
+      "vendor": "TheRobotStudio",
+      "dof": 6,
+      "bus": [
+        "feetech"
+      ],
+      "support_status": "verified_mock",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "935588c99920e3c6f569aeb8db66ead7d4396ca76b22637a845a0a0f0fcb86cf",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/so101_leader/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/so101_leader/profile.json"
+      },
+      "thumbnail_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/so101_leader/thumbnail.webp",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/so101_leader/thumbnail.webp"
+      }
+    },
+    {
+      "id": "unitree_g1",
+      "name_zh": "Unitree G1 双足人形",
+      "name_en": "Unitree G1 Humanoid",
+      "kind": "humanoid",
+      "vendor": "Unitree Robotics",
+      "dof": 29,
+      "bus": [
+        "sdk"
+      ],
+      "support_status": "planned",
+      "schema_version": 2,
+      "min_app_version": "0.2.0",
+      "sha256": "bd97a0d584a34071163159316d934e67f26e1dd2325d96bf1c3192fc7e0d31ed",
+      "profile_url": {
+        "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/unitree_g1/profile.json",
+        "jsdelivr": "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/profiles/unitree_g1/profile.json"
+      }
+    }
+  ]
+}

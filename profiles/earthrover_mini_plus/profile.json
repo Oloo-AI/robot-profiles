@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "id": "earthrover_mini_plus",
+  "name": "EarthRover Mini+ 移动车",
+  "name_en": "EarthRover Mini+ Rover",
+  "kind": "mobile",
+  "dof": 0,
+  "bus": [
+    "other"
+  ],
+  "support_status": "planned",
+  "lerobot_type": "earthrover_mini_plus",
+  "vendor": {
+    "name": "Frodobots",
+    "url": "https://github.com/frodobots-org"
+  }
+}

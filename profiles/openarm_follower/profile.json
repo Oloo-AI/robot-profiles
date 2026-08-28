@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "id": "openarm_follower",
+  "name": "OpenArm 从臂",
+  "name_en": "OpenArm Follower",
+  "kind": "arm",
+  "dof": 8,
+  "bus": [
+    "damiao"
+  ],
+  "support_status": "planned",
+  "lerobot_type": "openarm_follower",
+  "vendor": {
+    "name": "Enactic",
+    "url": "https://github.com/enactic/openarm"
+  }
+}

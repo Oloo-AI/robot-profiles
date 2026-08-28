@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "id": "unitree_g1",
+  "name": "Unitree G1 双足人形",
+  "name_en": "Unitree G1 Humanoid",
+  "kind": "humanoid",
+  "dof": 29,
+  "bus": [
+    "sdk"
+  ],
+  "support_status": "planned",
+  "lerobot_type": "unitree_g1",
+  "vendor": {
+    "name": "Unitree Robotics",
+    "url": "https://github.com/unitreerobotics"
+  }
+}

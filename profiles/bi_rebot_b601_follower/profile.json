@@ -1,0 +1,17 @@
+{
+  "schema_version": 2,
+  "id": "bi_rebot_b601_follower",
+  "name": "双臂 reBot B601（Bimanual）",
+  "name_en": "Bimanual reBot B601 Follower",
+  "kind": "bimanual",
+  "dof": 14,
+  "bus": [
+    "other"
+  ],
+  "support_status": "planned",
+  "lerobot_type": "bi_rebot_b601_follower",
+  "vendor": {
+    "name": "Seeed Studio",
+    "url": "https://github.com/Seeed-Studio"
+  }
+}

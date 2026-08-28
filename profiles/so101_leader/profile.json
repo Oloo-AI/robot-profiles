@@ -1,0 +1,293 @@
+{
+  "schema_version": 2,
+  "id": "so101_leader",
+  "name": "SO-101 主臂（Leader）",
+  "name_en": "SO-101 Leader",
+  "robot_type": "so101",
+  "lerobot_type": "so101_leader",
+  "kind": "arm",
+  "role": "leader",
+  "dof": 6,
+  "support_status": "verified_mock",
+  "vendor": {
+    "name": "TheRobotStudio",
+    "url": "https://github.com/TheRobotStudio/SO-ARM100"
+  },
+  "aliases": [
+    "so100_leader"
+  ],
+  "bus": [
+    "feetech"
+  ],
+  "buses": [
+    {
+      "id": "main",
+      "protocol": "feetech",
+      "transport": "serial",
+      "port_role": "leader_arm",
+      "params": {
+        "baudrate": 1000000,
+        "protocol_version": 0
+      },
+      "resolution": 4096
+    }
+  ],
+  "actuators": [
+    {
+      "name": "shoulder_pan",
+      "id": 1,
+      "bus": "main",
+      "model": "sts3215",
+      "norm_mode": "degrees",
+      "resolution": 4096,
+      "full_turn": false,
+      "limits": {
+        "range_deg": [
+          -110.0,
+          110.0
+        ],
+        "max_step_deg": 10.0,
+        "max_torque": null
+      }
+    },
+    {
+      "name": "shoulder_lift",
+      "id": 2,
+      "bus": "main",
+      "model": "sts3215",
+      "norm_mode": "degrees",
+      "resolution": 4096,
+      "full_turn": false,
+      "limits": {
+        "range_deg": [
+          -100.0,
+          100.0
+        ],
+        "max_step_deg": 10.0,
+        "max_torque": null
+      }
+    },
+    {
+      "name": "elbow_flex",
+      "id": 3,
+      "bus": "main",
+      "model": "sts3215",
+      "norm_mode": "degrees",
+      "resolution": 4096,
+      "full_turn": false,
+      "limits": {
+        "range_deg": [
+          -96.83,
+          96.83
+        ],
+        "max_step_deg": 10.0,
+        "max_torque": null
+      }
+    },
+    {
+      "name": "wrist_flex",
+      "id": 4,
+      "bus": "main",
+      "model": "sts3215",
+      "norm_mode": "degrees",
+      "resolution": 4096,
+      "full_turn": false,
+      "limits": {
+        "range_deg": [
+          -95.0,
+          95.0
+        ],
+        "max_step_deg": 10.0,
+        "max_torque": null
+      }
+    },
+    {
+      "name": "wrist_roll",
+      "id": 5,
+      "bus": "main",
+      "model": "sts3215",
+      "norm_mode": "degrees",
+      "resolution": 4096,
+      "full_turn": true,
+      "limits": {
+        "range_deg": null,
+        "max_step_deg": 10.0,
+        "max_torque": null
+      }
+    },
+    {
+      "name": "gripper",
+      "id": 6,
+      "bus": "main",
+      "model": "sts3215",
+      "norm_mode": "range_0_100",
+      "resolution": 4096,
+      "full_turn": false,
+      "limits": {
+        "range_deg": [
+          -10.0,
+          100.0
+        ],
+        "max_step_deg": 10.0,
+        "max_torque": null
+      },
+      "expected_span_ticks": 1200
+    }
+  ],
+  "sensors": {
+    "cameras": [],
+    "imu": null,
+    "force_torque": null
+  },
+  "calibration": {
+    "mode": "homing_range",
+    "steps": [
+      "preparing",
+      "homing",
+      "recording",
+      "review",
+      "writing"
+    ],
+    "full_turn_actuators": [
+      "wrist_roll"
+    ],
+    "lerobot_bucket": {
+      "robots": "so_follower",
+      "teleoperators": "so_leader"
+    },
+    "notes_zh": "把每个关节摆到行程中点后开始寻零，再逐关节扫到两端极限。"
+  },
+  "features": {
+    "observation.state": [
+      {
+        "key": "shoulder_pan.pos",
+        "actuator": "shoulder_pan",
+        "unit": "deg"
+      },
+      {
+        "key": "shoulder_lift.pos",
+        "actuator": "shoulder_lift",
+        "unit": "deg"
+      },
+      {
+        "key": "elbow_flex.pos",
+        "actuator": "elbow_flex",
+        "unit": "deg"
+      },
+      {
+        "key": "wrist_flex.pos",
+        "actuator": "wrist_flex",
+        "unit": "deg"
+      },
+      {
+        "key": "wrist_roll.pos",
+        "actuator": "wrist_roll",
+        "unit": "deg"
+      },
+      {
+        "key": "gripper.pos",
+        "actuator": "gripper",
+        "unit": "percent"
+      }
+    ],
+    "action": [
+      {
+        "key": "shoulder_pan.pos",
+        "actuator": "shoulder_pan",
+        "unit": "deg"
+      },
+      {
+        "key": "shoulder_lift.pos",
+        "actuator": "shoulder_lift",
+        "unit": "deg"
+      },
+      {
+        "key": "elbow_flex.pos",
+        "actuator": "elbow_flex",
+        "unit": "deg"
+      },
+      {
+        "key": "wrist_flex.pos",
+        "actuator": "wrist_flex",
+        "unit": "deg"
+      },
+      {
+        "key": "wrist_roll.pos",
+        "actuator": "wrist_roll",
+        "unit": "deg"
+      },
+      {
+        "key": "gripper.pos",
+        "actuator": "gripper",
+        "unit": "percent"
+      }
+    ],
+    "images": [
+      "observation.images.front",
+      "observation.images.wrist"
+    ]
+  },
+  "kinematics": {
+    "urdf": {
+      "source": "url",
+      "url": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/so101_follower/urdf/robot.urdf",
+      "license": "Apache-2.0",
+      "attribution": "TheRobotStudio/SO-ARM100",
+      "joint_map": {
+        "shoulder_pan": [
+          "shoulder_pan"
+        ],
+        "shoulder_lift": [
+          "shoulder_lift"
+        ],
+        "elbow_flex": [
+          "elbow_flex"
+        ],
+        "wrist_flex": [
+          "wrist_flex"
+        ],
+        "wrist_roll": [
+          "wrist_roll"
+        ],
+        "gripper": [
+          "gripper"
+        ]
+      },
+      "joint_kind": {
+        "shoulder_pan": "revolute",
+        "shoulder_lift": "revolute",
+        "elbow_flex": "revolute",
+        "wrist_flex": "revolute",
+        "wrist_roll": "revolute",
+        "gripper": "revolute"
+      }
+    }
+  },
+  "teleop": {
+    "compatible": [
+      "so101_follower"
+    ],
+    "keyboard": null
+  },
+  "safety": {
+    "voltage_v": {
+      "min": 6.0,
+      "max": 13.0
+    },
+    "temperature_c": {
+      "max": 70.0
+    },
+    "max_step_deg": 10.0,
+    "max_relative_target": null,
+    "torque_on_connect": false
+  },
+  "capabilities": {
+    "read_temperature": true,
+    "read_voltage": true,
+    "read_load": false,
+    "torque_toggle": true,
+    "factory_reset": true,
+    "clear_errors": true,
+    "scan": true
+  }
+}
