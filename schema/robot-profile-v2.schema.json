@@ -2,7 +2,7 @@
   "$schema": "https://json-schema.org/draft/2020-12/schema",
   "$id": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/schema/robot-profile-v2.schema.json",
   "title": "Oloo Robot Profile v2",
-  "description": "Data-only robot profile consumed by Oloo Studio. See docs/design/robot-abstraction.md §2.2 in Oloo-AI/oloo-studio for the canonical field-by-field rationale. This registry additionally allows `support_status: planned` minimal stubs (id/name/kind/dof/bus/support_status/lerobot_type only) for robots not yet fully profiled.",
+  "description": "Data-only robot profile consumed by Oloo Studio. See docs/design/robot-abstraction.md §2.2 in Oloo-AI/oloo-studio for the canonical field-by-field rationale. This registry additionally allows `support_status: planned` minimal stubs (id/name/kind/dof/bus/support_status/lerobot_type only) for robots not yet fully profiled. Full profiles must carry robot_type/role/buses/actuators/safety; every other section has an app-side default (features derive one `<actuator>.pos` channel per actuator, teleop.keyboard_map is generated from actuator order, ...). Publishing policy (vendor, dof, thumbnail, README, all sections spelled out) is enforced by scripts/validate.py, not by this schema, so the same schema is the file format of user-authored profiles in Oloo Studio.",
   "type": "object",
   "required": ["schema_version", "id", "name", "kind", "support_status"],
   "additionalProperties": false,
@@ -16,7 +16,7 @@
       "additionalProperties": false,
       "required": ["id", "protocol", "transport"],
       "properties": {
-        "id": { "type": "string", "minLength": 1, "description": "Unique within the profile; referenced by actuators[].bus" },
+        "id": { "type": "string", "minLength": 1, "pattern": "^[a-z0-9_]+$", "description": "Unique within the profile; referenced by actuators[].bus" },
         "protocol": { "$ref": "#/$defs/actuatorProtocol" },
         "transport": { "type": "string", "enum": ["serial", "can", "ethernet", "sdk", "zmq"] },
         "port_role": { "type": "string", "description": "Label shown to the user when picking a port, e.g. 'follower_arm', 'left_arm'" },
@@ -40,6 +40,7 @@
         "resolution": { "type": "integer", "minimum": 1 },
         "expected_span_ticks": { "type": "integer", "minimum": 1 },
         "full_turn": { "type": "boolean", "default": false },
+        "label_zh": { "type": "string", "minLength": 1, "description": "Chinese display label of the joint (Oloo Studio UI: joint tables, key hints, gauges)." },
         "limits": {
           "type": "object",
           "additionalProperties": false,
@@ -50,8 +51,8 @@
               "minItems": 2,
               "maxItems": 2
             },
-            "max_step_deg": { "type": ["number", "null"] },
-            "max_torque": { "type": ["number", "null"] }
+            "max_step_deg": { "type": ["number", "null"], "exclusiveMinimum": 0 },
+            "max_torque": { "type": ["number", "null"], "exclusiveMinimum": 0 }
           }
         }
       }
@@ -59,10 +60,10 @@
     "featureRef": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["key", "actuator"],
+      "required": ["key"],
       "properties": {
         "key": { "type": "string", "minLength": 1 },
-        "actuator": { "type": "string", "minLength": 1, "description": "Must match an actuators[].name" },
+        "actuator": { "type": "string", "minLength": 1, "description": "Must match an actuators[].name. Omit for virtual channels that no single actuator produces (e.g. a mobile base's x.vel / theta.vel)." },
         "unit": { "type": "string" }
       }
     }
@@ -74,7 +75,12 @@
     "name": { "type": "string", "minLength": 1, "description": "Primary display name (Chinese, per Oloo Studio UI convention)." },
     "name_en": { "type": "string", "minLength": 1, "description": "English display name, used for index.json name_en." },
 
-    "robot_type": { "type": "string", "description": "lerobot-side family name; used for URDF routing / dataset robot_type prefix." },
+    "robot_type": { "type": "string", "pattern": "^[a-z0-9_]+$", "description": "lerobot-side family name; used for URDF routing / dataset robot_type prefix." },
+    "robot_type_aliases": {
+      "type": "array",
+      "items": { "type": "string", "pattern": "^[a-z0-9_]+$" },
+      "description": "Other family names that resolve to this robot_type (e.g. so100 -> so101): URDF route, calibration file prefix and dataset robot_type prefix all accept them."
+    },
     "lerobot_type": { "type": ["string", "null"], "description": "lerobot RobotConfig/TeleoperatorConfig registered type name, or null for a non-lerobot / Oloo-only robot." },
 
     "kind": { "type": "string", "enum": ["arm", "bimanual", "hand", "mobile", "mobile_arm", "humanoid", "glove"] },
@@ -131,10 +137,10 @@
           "items": {
             "type": "object",
             "additionalProperties": false,
-            "required": ["role", "required"],
+            "required": ["role"],
             "properties": {
-              "role": { "type": "string", "minLength": 1 },
-              "required": { "type": "boolean" }
+              "role": { "type": "string", "minLength": 1, "pattern": "^[a-z][a-z0-9_]{0,31}$", "description": "Dataset key suffix: observation.images.<role>" },
+              "required": { "type": "boolean", "default": false }
             }
           }
         },
@@ -161,11 +167,14 @@
         "lerobot_bucket": {
           "type": "object",
           "additionalProperties": false,
+          "required": ["robots"],
           "properties": {
-            "robots": { "type": "string" },
-            "teleoperators": { "type": "string" }
+            "robots": { "type": "string", "minLength": 1 },
+            "teleoperators": { "type": "string", "minLength": 1 }
           }
         },
+        "operating_mode": { "type": "string", "minLength": 1, "description": "Servo operating mode selected before homing (Feetech 'position'; Koch uses 'extended_position')." },
+        "vendor_url": { "type": "string", "format": "uri", "description": "mode == 'vendor': link to the manufacturer's calibration tool." },
         "notes_zh": { "type": "string" }
       }
     },
@@ -173,7 +182,7 @@
     "features": {
       "type": "object",
       "additionalProperties": false,
-      "required": ["observation.state", "action"],
+      "description": "When absent the app derives one `<actuator>.pos` channel per actuator for both observation.state and action.",
       "properties": {
         "observation.state": { "type": "array", "items": { "$ref": "#/$defs/featureRef" } },
         "action": { "type": "array", "items": { "$ref": "#/$defs/featureRef" } },
@@ -219,8 +228,17 @@
           "additionalProperties": false,
           "properties": {
             "auto": { "type": "boolean" },
-            "extra": { "type": "object" }
+            "extra": {
+              "type": "object",
+              "additionalProperties": { "type": "object", "additionalProperties": { "type": "string" } },
+              "description": "Non-actuator key groups, e.g. {\"base\": {\"forward\": \"w\", \"backward\": \"s\"}}."
+            }
           }
+        },
+        "keyboard_map": {
+          "type": "object",
+          "additionalProperties": { "type": "array", "items": { "type": "string" }, "minItems": 2, "maxItems": 2 },
+          "description": "Explicit actuator -> [increase_key, decrease_key] bindings. When absent (and keyboard.auto is true) the app assigns 12 key pairs in actuator order."
         }
       }
     },
@@ -228,6 +246,7 @@
     "safety": {
       "type": "object",
       "additionalProperties": false,
+      "required": ["voltage_v", "temperature_c"],
       "properties": {
         "voltage_v": {
           "type": "object",
@@ -246,8 +265,8 @@
             "max": { "type": "number", "exclusiveMinimum": 0 }
           }
         },
-        "max_step_deg": { "type": ["number", "null"] },
-        "max_relative_target": { "type": ["number", "null"] },
+        "max_step_deg": { "type": "number", "exclusiveMinimum": 0, "description": "Default per-cycle step ceiling (deg); the app uses 10 when absent." },
+        "max_relative_target": { "type": ["number", "null"], "exclusiveMinimum": 0 },
         "torque_on_connect": { "type": "boolean" }
       }
     },
@@ -276,11 +295,7 @@
         "required": ["dof", "bus"]
       },
       "else": {
-        "required": [
-          "robot_type", "dof", "vendor", "buses", "actuators",
-          "sensors", "calibration", "features", "kinematics",
-          "teleop", "safety", "capabilities"
-        ]
+        "required": ["robot_type", "role", "buses", "actuators", "safety"]
       }
     }
   ]

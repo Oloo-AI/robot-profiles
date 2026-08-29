@@ -1,5 +1,5 @@
 {
-  "generated_at": 1787927115,
+  "generated_at": 1788013205,
   "registry_version": 1,
   "profiles": [
     {
@@ -14,7 +14,7 @@
       ],
       "support_status": "planned",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "d673723061b92a43493ba535ba65d9b6d33d8eeff4d6cda7d8d8f69bacad6055",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/bi_openarm_follower/profile.json",
@@ -33,7 +33,7 @@
       ],
       "support_status": "planned",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "7b810b0ab67a9d74d2fe1489afc925f7359cb2f3ce449dd64c1749334198f677",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/bi_rebot_b601_follower/profile.json",
@@ -52,7 +52,7 @@
       ],
       "support_status": "planned",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "df0b42ead1646302d586225fc898e2d3286b346e0cdc8867ddebd65cb7d85aa8",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/bi_so_follower/profile.json",
@@ -71,7 +71,7 @@
       ],
       "support_status": "planned",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "a15735bf55e686af11da16a229b71b37dff903ca3f4d9d7f69e5d0d940b416e1",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/earthrover_mini_plus/profile.json",
@@ -90,7 +90,7 @@
       ],
       "support_status": "planned",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "beeb063585b79f7138ee69b74726e21f99e8109f77dd66e872d978985ceb0ea9",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/hope_jr_arm/profile.json",
@@ -109,7 +109,7 @@
       ],
       "support_status": "planned",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "1656271144cbe0ae805739602bdf395a772fdab34ab8e044d4ec5a83294cb26e",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/hope_jr_hand/profile.json",
@@ -128,7 +128,7 @@
       ],
       "support_status": "planned",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "7b26567d4336a93deece5581ac226ba4d57039eb596ba1db3488d21a6668812c",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/koch_follower/profile.json",
@@ -147,7 +147,7 @@
       ],
       "support_status": "planned",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "e7be1ce2047298ae7faf24fd3859b58a527ca6b4bcb4b7c6420481eb394b04fa",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/lekiwi/profile.json",
@@ -166,7 +166,7 @@
       ],
       "support_status": "planned",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "1abe53288116fcfdaafeafd54133e78704853658ada7ce0d1ff8ef4c0539c65d",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/omx_follower/profile.json",
@@ -185,7 +185,7 @@
       ],
       "support_status": "planned",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "41112aa6535b3424384dea0bd04e56762c52c4ffb62149a38f92a11615de9cd0",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/openarm_follower/profile.json",
@@ -204,7 +204,7 @@
       ],
       "support_status": "planned",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "96740d28c8bb71acc8db9d164f6ed3f7ffcbc88a0ad8c978b52d06e0b68ac614",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/reachy2/profile.json",
@@ -223,7 +223,7 @@
       ],
       "support_status": "planned",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "9b1d147392100fd82bbc678f8d3f2d2ad6ec815e798c297e8f526cf6a4d0a50c",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/rebot_b601_follower/profile.json",
@@ -242,7 +242,7 @@
       ],
       "support_status": "verified_mock",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "b7a986778be93cadce5b8cce0ad116a51be77be33f983eced7272411bf4994e6",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/so101_follower/profile.json",
@@ -269,7 +269,7 @@
       ],
       "support_status": "verified_mock",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "935588c99920e3c6f569aeb8db66ead7d4396ca76b22637a845a0a0f0fcb86cf",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/so101_leader/profile.json",
@@ -292,7 +292,7 @@
       ],
       "support_status": "planned",
       "schema_version": 2,
-      "min_app_version": "0.2.0",
+      "min_app_version": "0.1.0",
       "sha256": "bd97a0d584a34071163159316d934e67f26e1dd2325d96bf1c3192fc7e0d31ed",
       "profile_url": {
         "raw": "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/profiles/unitree_g1/profile.json",

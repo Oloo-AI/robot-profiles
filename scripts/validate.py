@@ -11,9 +11,15 @@ Checks (see docs/design/robot-abstraction.md §5.2 in Oloo-AI/oloo-studio):
    (required unless support_status == "planned"). If urdf/ exists, urdf/NOTICE.md
    is required.
 5. Semantic cross-references: actuators[].bus all resolve to buses[].id; features
-   observation.state/action entries reference existing actuators; kinematics.urdf
-   joint_map keys are actuator names; `bus` (protocol list) is consistent with
-   buses[].protocol when both are present.
+   observation.state/action entries that name an actuator reference an existing one
+   (entries without `actuator` are virtual channels); kinematics.urdf joint_map,
+   teleop.keyboard_map and calibration.full_turn_actuators name actuators; `bus`
+   (protocol list) is consistent with buses[].protocol when both are present.
+5b. Publishing policy for non-planned profiles: name_en / dof / vendor.name and every
+   section (sensors, calibration, features, kinematics, teleop, capabilities) spelled
+   out, features listed explicitly, dof == len(actuators). The schema itself only
+   requires robot_type/role/buses/actuators/safety so it can double as the file
+   format of user-authored profiles in Oloo Studio.
 6. Registry-wide file-type allowlist (data-only guarantee, §5.4): every tracked
    file under profiles/ has an extension in the allowlist; URDF/mesh size caps.
 
@@ -108,8 +114,16 @@ def check_semantic(profile_dir: Path, doc: dict, errors: list[str]) -> None:
     features = doc.get("features", {})
     for section in ("observation.state", "action"):
         for ref in features.get(section, []):
-            if ref.get("actuator") not in actuator_names:
+            # Virtual channels (mobile base x.vel ...) have no actuator; only check the ones that do.
+            if "actuator" in ref and ref["actuator"] not in actuator_names:
                 fail(errors, f"{profile_dir.name}: features.{section} references unknown actuator {ref.get('actuator')!r}")
+
+    for name in doc.get("teleop", {}).get("keyboard_map", {}) or {}:
+        if name not in actuator_names:
+            fail(errors, f"{profile_dir.name}: teleop.keyboard_map key {name!r} is not an actuator name")
+    for name in doc.get("calibration", {}).get("full_turn_actuators", []) or []:
+        if name not in actuator_names:
+            fail(errors, f"{profile_dir.name}: calibration.full_turn_actuators references unknown actuator {name!r}")
 
     urdf = doc.get("kinematics", {}).get("urdf") or {}
     joint_map = urdf.get("joint_map") or {}
@@ -126,6 +140,29 @@ def check_semantic(profile_dir: Path, doc: dict, errors: list[str]) -> None:
                 f"{profile_dir.name}: top-level bus={declared_bus!r} inconsistent with "
                 f"buses[].protocol={derived!r}",
             )
+
+
+# Sections a *published* full profile must spell out even though the schema (which doubles as
+# the file format of user-authored profiles in Oloo Studio) lets an app default them.
+PUBLISH_REQUIRED_KEYS = (
+    "name_en", "dof", "vendor", "sensors", "calibration", "features", "kinematics", "teleop", "capabilities",
+)
+
+
+def check_publish_policy(profile_dir: Path, doc: dict, errors: list[str]) -> None:
+    """Registry publishing policy for non-planned profiles (stricter than the schema)."""
+    if doc.get("support_status") == "planned":
+        return
+    for key in PUBLISH_REQUIRED_KEYS:
+        if key not in doc:
+            fail(errors, f"{profile_dir.name}: published profiles must spell out {key!r} (registry policy)")
+    if not (doc.get("vendor") or {}).get("name"):
+        fail(errors, f"{profile_dir.name}: vendor.name is required for published profiles")
+    features = doc.get("features") or {}
+    if not features.get("observation.state") or not features.get("action"):
+        fail(errors, f"{profile_dir.name}: published profiles must list features.observation.state and features.action explicitly")
+    if doc.get("dof") is not None and doc.get("dof") != len(doc.get("actuators", [])):
+        fail(errors, f"{profile_dir.name}: dof={doc.get('dof')} does not match {len(doc.get('actuators', []))} actuators")
 
 
 def check_file_allowlist(profile_dir: Path, errors: list[str]) -> None:
@@ -184,6 +221,7 @@ def main() -> int:
         check_thumbnail(profile_dir, doc, errors)
         check_readme(profile_dir, doc, errors)
         check_semantic(profile_dir, doc, errors)
+        check_publish_policy(profile_dir, doc, errors)
         check_file_allowlist(profile_dir, errors)
 
         pid = doc.get("id")
