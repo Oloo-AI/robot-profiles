@@ -81,19 +81,19 @@ so this field is a safety signal, not just a badge. Be honest.
 | `verified_mock` | Validated against Oloo Studio's mock motor bus, or carefully transcribed from a working lerobot config — **not yet confirmed on physical hardware**. | 在 Oloo Studio 的 mock 总线上验证过，或从一份能跑的 lerobot config 仔细转写而来 —— **尚未在真机上确认**。 |
 | `planned` | Not yet profiled. A minimal stub (`id`/`name`/`kind`/`dof`/`bus`/`support_status`/`lerobot_type`) so the gallery can show a "coming soon" card. | 尚未做出完整 profile，只有最小 stub 字段，让画廊能展示「计划中」卡片。 |
 
-This registry's `support_status` enum (`verified_hw` / `verified_mock` / `planned`) is a
-deliberately finer-grained superset of the app-internal `Profile.support` enum
-(`verified` / `untested` / `planned`) described in `oloo-studio`'s
-`docs/design/robot-abstraction.md` §2.2 — the registry needs to distinguish "tested on
-real hardware" from "only tested against the mock bus" so contributors without hardware
-can still contribute honestly-labeled profiles; the app maps `verified_hw` → `verified`
-and `verified_mock` → `untested` when it ingests a registry profile.
+This registry's `support_status` enum (`verified_hw` / `verified_mock` / `planned`) **is**
+the app's enum: Oloo Studio stores it verbatim (its older `verified` / `untested` spellings
+are migrated to `verified_hw` / `verified_mock` on load). The registry needs to distinguish
+"tested on real hardware" from "only tested against the mock bus" so contributors without
+hardware can still contribute honestly-labeled profiles; the app's SafetyGuard runs its
+conservative thresholds (lower temperature ceiling, halved per-cycle steps) for anything
+that is not `verified_hw`, and for every profile from a `third_party` source.
 
-本仓库的 `support_status` 取值（`verified_hw` / `verified_mock` / `planned`）是
-`oloo-studio` 设计文档 §2.2 里应用内部 `Profile.support` 枚举
-（`verified` / `untested` / `planned`）的一个有意做得更细的超集 —— 注册表需要区分
-「真机测过」和「只在 mock 总线测过」，这样没有硬件的贡献者也能诚实地贡献 profile；
-应用同步时把 `verified_hw` 映射到 `verified`、`verified_mock` 映射到 `untested`。
+本仓库的 `support_status` 取值（`verified_hw` / `verified_mock` / `planned`）**就是**
+应用内部的枚举：Oloo Studio 原样存储（旧写法 `verified` / `untested` 读取时迁移为
+`verified_hw` / `verified_mock`）。注册表需要区分「真机测过」和「只在 mock 总线测过」，
+这样没有硬件的贡献者也能诚实地贡献 profile；应用侧 SafetyGuard 对非 `verified_hw`
+的 profile、以及所有 `third_party` 源的 profile 一律使用保守阈值（温度上限更低、单步减半）。
 
 ## Data-only safety / 数据-only 安全声明
 

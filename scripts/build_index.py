@@ -22,8 +22,9 @@ RAW_BASE = "https://raw.githubusercontent.com/Oloo-AI/robot-profiles/main/"
 JSDELIVR_BASE = "https://cdn.jsdelivr.net/gh/Oloo-AI/robot-profiles@main/"
 
 # Minimum Oloo Studio app version required to consume this registry's schema.
-# Bump alongside schema/robot-profile-v2.schema.json breaking changes.
-MIN_APP_VERSION = "0.2.0"
+# Bump alongside schema/robot-profile-v2.schema.json breaking changes. Registry sync
+# shipped in the 0.1.x daemon (oloo-studio C1.5b), so 0.1.0 is the floor.
+MIN_APP_VERSION = "0.1.0"
 
 REGISTRY_VERSION = 1
 SCHEMA_VERSION = 2
